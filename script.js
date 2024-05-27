@@ -11,6 +11,23 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(stream => {
             video.srcObject = stream;
             video.play();
+
+            video.addEventListener('play', () => {
+                function drawFrame() {
+                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                    // Применение эффекта воды
+                    ctx.globalAlpha = 0.6;
+                    ctx.filter = 'blur(5px)';
+                    ctx.drawImage(canvas, 0, 5, canvas.width, canvas.height - 10);
+                    ctx.filter = 'none';
+                    ctx.globalAlpha = 1.0;
+
+                    requestAnimationFrame(drawFrame);
+                }
+
+                drawFrame();
+            });
         })
         .catch(err => {
             console.error("Ошибка доступа к веб-камере: ", err);
@@ -18,21 +35,4 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         alert("Веб-камера не поддерживается вашим устройством");
     }
-
-    video.addEventListener('play', () => {
-        function drawFrame() {
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-            // Применение эффекта воды
-            ctx.globalAlpha = 0.6;
-            ctx.filter = 'blur(5px)';
-            ctx.drawImage(canvas, 0, 5, canvas.width, canvas.height - 10);
-            ctx.filter = 'none';
-            ctx.globalAlpha = 1.0;
-
-            requestAnimationFrame(drawFrame);
-        }
-
-        drawFrame();
-    });
 });

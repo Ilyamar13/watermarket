@@ -32,10 +32,4 @@ body, html {
     height: 100%;
     background: rgba(0, 191, 255, 0.2); /* Прозрачный голубой слой */
     pointer-events: none;
-    animation: water 10s infinite;
-}
-
-@keyframes water {
-    0%, 100% { filter: blur(5px) hue-rotate(0deg); }
-    50% { filter: blur(15px) hue-rotate(20deg); }
 }
