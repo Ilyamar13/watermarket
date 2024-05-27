@@ -23,6 +23,7 @@ body, html {
     height: 100%;
     object-fit: cover;
     transform: scaleX(-1); /* Отражение как в зеркале */
+    filter: url(#water-effect); /* Применение фильтра воды */
 }
 
 .overlay {
@@ -31,5 +32,25 @@ body, html {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 191, 255, 0.3); /* Прозрачный голубой слой */
+    background: rgba(0, 191, 255, 0.2); /* Прозрачный голубой слой */
+    pointer-events: none;
+}
+
+@keyframes water {
+    0% { transform: translate(0, 0) }
+    50% { transform: translate(-20px, 20px) }
+    100% { transform: translate(0, 0) }
+}
+
+.overlay::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 191, 255, 0.2);
+    mix-blend-mode: screen;
+    filter: blur(5px);
+    animation: water 5s infinite;
 }
